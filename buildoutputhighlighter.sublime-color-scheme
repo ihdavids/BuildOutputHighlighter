@@ -23,7 +23,7 @@
 		},
 		{
 			"scope": "constant",
-			"foreground": "#aaaaaa",
+			"foreground": "#aaaacc",
 		},
 		{
 			"scope": "source.ianbuild.imporantoption",
@@ -41,6 +41,10 @@
 		{
 			"scope": "source.ianbuild.warning",
 			"foreground": "#ffff00",
+		},
+		{
+			"scope": "source.ianbuild.indicator",
+			"foreground": "#ffaa00",
 		},
 		{
 			"scope": "source.ianbuild.buildstatus",

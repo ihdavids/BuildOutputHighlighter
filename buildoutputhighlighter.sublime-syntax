@@ -40,6 +40,22 @@ contexts:
         4: source.ianbuild.error
       scope: source.ianbuild.error
 
+    - match: '^\s*([^():]+)\s*[:]([0-9]+)(:[0-9]+)?[:]\s+(fatal\s+)?error[:](.*)'
+      captures:
+        1: source.ianbuild.filename
+        2: source.ianbuild.linenumber
+        3: source.ianbuild.linenumber
+        4: source.ianbuild.error
+      scope: source.ianbuild.error
+
+    - match: '^\s*([^():]+)\s*[:]([0-9]+)(:[0-9]+)?[:]\s+note[:](.*)'
+      captures:
+        1: source.ianbuild.filename
+        2: source.ianbuild.linenumber
+        3: source.ianbuild.linenumber
+        4: source.ianbuild.warning
+      scope: source.ianbuild.warning
+
     - match: '^\s*([^()]+)\s*[(]([0-9]+)(,[0-9]+)?[)]\s*[:]\s*warning(.*)'
       captures:
         1: source.ianbuild.filename
@@ -47,6 +63,9 @@ contexts:
         3: source.ianbuild.linenumber
         4: source.ianbuild.warning
       scope: source.ianbuild.warning
+
+    - match: '^\s*[~ ]*[\^][ ~]*\s*$'
+      scope: source.ianbuild.indicator
 
     - match: 'Linking CXX .*'
       scope: source.ianbuild.buildstatus
@@ -72,6 +91,18 @@ contexts:
 
     - match: 'One or more builds and deployments FAILED'
       scope: source.ianbuild.error
+
+    - match: '\b(float|int|double|unsigned|long|enum|class|void|static)\b'
+      scope: keyword
+
+    - match: '\b("[^"]*")\b'
+      scope: string
+
+    - match: '[()=+;]'
+      scope: constant
+
+    - match: '[:][:]'
+      scope: keyword
   keywords:
     # Keywords are if, else for and while.
     # Note that blackslashes don't need to be escaped within single quoted
