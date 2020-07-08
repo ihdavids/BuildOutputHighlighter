@@ -1,0 +1,62 @@
+{
+	"variables": {
+		// Define variables here
+	},
+	"globals": {
+		"foreground": "#ffffff",
+		"background": "#101010",
+		"accent": "",
+		"selection": "",
+	},
+	"rules": [
+		{
+			"scope": "string",
+			"foreground": "#aaffff",
+		},
+		{
+			"scope": "variable",
+			"foreground": "#ffaaaa",
+		},
+		{
+			"scope": "keyword",
+			"foreground": "#aaffaa",
+		},
+		{
+			"scope": "constant",
+			"foreground": "#aaaaaa",
+		},
+		{
+			"scope": "source.ianbuild.imporantoption",
+			"foreground": "#c0b0ff",
+			"font_style": "bold italic",
+		},
+		{
+			"scope": "source.ianbuild.filename",
+			"foreground": "#f0df9a",
+		},
+		{
+			"scope": "source.ianbuild.linenumber",
+			"foreground": "#aaffff",
+		},
+		{
+			"scope": "source.ianbuild.warning",
+			"foreground": "#ffff00",
+		},
+		{
+			"scope": "source.ianbuild.buildstatus",
+			"foreground": "#af00af",
+		},
+		{
+			"scope": "source.ianbuild.buildheading",
+			"foreground": "#00bfbf",
+		},
+		{
+			"scope": "source.ianbuild.error",
+			"foreground": "#ff0000",
+		},
+		{
+			"scope": "source.ianbuild.ok",
+			"foreground": "#33ff33",
+		},
+	]
+}

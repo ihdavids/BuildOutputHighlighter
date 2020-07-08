@@ -1,0 +1,112 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - .out
+scope: source.ianbuild
+
+contexts:
+  # The prototype context is prepended to all contexts but those setting
+  # meta_include_prototype: false.
+  prototype:
+    - include: comments
+
+  main:
+    # The main context is the initial starting point of our syntax.
+    # Include other contexts from here (or specify them directly).
+    - include: keywords
+    - include: numbers
+    - include: strings
+
+    - match: '-D_NOOPT'
+      scope: source.ianbuild.imporantoption
+
+    - match: 'build stopped'
+      scope: source.ianbuild.warning
+
+    - match: 'subcommand failed.'
+      scope: source.ianbuild.error
+
+    - match: 'FAILED:(.*)'
+      captures:
+        1: source.ianbuild.filename
+      scope: source.ianbuild.error
+
+    - match: '^\s*([^()]+)\s*[(]([0-9]+)(,[0-9]+)?[)]\s*[:]\s*(fatal\s+)?error(.*)'
+      captures:
+        1: source.ianbuild.filename
+        2: source.ianbuild.linenumber
+        3: source.ianbuild.linenumber
+        4: source.ianbuild.error
+      scope: source.ianbuild.error
+
+    - match: '^\s*([^()]+)\s*[(]([0-9]+)(,[0-9]+)?[)]\s*[:]\s*warning(.*)'
+      captures:
+        1: source.ianbuild.filename
+        2: source.ianbuild.linenumber
+        3: source.ianbuild.linenumber
+        4: source.ianbuild.warning
+      scope: source.ianbuild.warning
+
+    - match: 'Linking CXX .*'
+      scope: source.ianbuild.buildstatus
+
+    - match: 'Running Core Script Bundler'
+      scope: source.ianbuild.buildstatus
+
+    - match: '\| (Failed) \|'
+      captures:
+        1: source.ianbuild.error
+      scope: source.ianbuild.buildstatus
+
+
+    - match: '\| (Success) \|'
+      captures:
+        1: source.ianbuild.ok
+      scope: source.ianbuild.buildstatus
+
+    - match: '\[(Finished in .*)\]'
+      captures:
+        1: source.ianbuild.ok
+      scope: source.ianbuild.buildstatus
+
+    - match: 'One or more builds and deployments FAILED'
+      scope: source.ianbuild.error
+  keywords:
+    # Keywords are if, else for and while.
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '\b(if|else|for|while)\b'
+      scope: keyword.control.example-c
+
+  numbers:
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.example-c
+
+  strings:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character.
+    - match: '"'
+      scope: punctuation.definition.string.begin.example-c
+      push: inside_string
+
+  inside_string:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.example-c
+    - match: '\.'
+      scope: constant.character.escape.example-c
+    - match: '"'
+      scope: punctuation.definition.string.end.example-c
+      pop: true
+
+  comments:
+    # Comments begin with a '//' and finish at the end of the line.
+    - match: '//'
+      scope: punctuation.definition.comment.example-c
+      push:
+        # This is an anonymous context push for brevity.
+        - meta_scope: comment.line.double-slash.example-c
+        - match: $\n?
+          pop: true
